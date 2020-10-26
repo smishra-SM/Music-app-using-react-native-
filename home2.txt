@@ -1,0 +1,210 @@
+import React from "react";
+import {
+StyleSheet,
+View,
+ActivityIndicator,
+FlatList,
+Text,
+TouchableOpacity
+} from "react-native";
+import { Card } from "react-native-elements";
+
+export default class Source extends React.Component {
+static navigationOptions = ({ navigation }) => {
+return {
+  title: "Home",
+  headerStyle: {backgroundColor: "#fff"},
+  headerTitleStyle: {textAlign: "center",flex: 1}
+ };
+};
+constructor(props) {
+ super(props);
+ this.state = {
+   loading: true, 
+   dataSource:[]
+  };
+}
+componentDidMount(){
+fetch("http://192.168.140.80:8000/song_list/")
+.then(response => response.json())
+.then((responseJson)=> {
+  this.setState({
+   loading: false,
+   dataSource: responseJson
+  })
+})
+.catch(error=>console.log(error)) //to catch the errors if any
+}
+FlatListItemSeparator = () => {
+return (
+  <View style={{
+     height: .5,
+     width:"100%",
+     backgroundColor:"rgba(0,0,0,0.5)",
+}}
+/>
+);
+}
+renderItem=(data)=>
+<TouchableOpacity style={styles.list} >
+<Card
+              image={{ uri: data.item.artwork }}
+              title={data.item.title}
+              containerStyle={{ padding: 0, width: 200,height:200 }}
+            >
+              <Text style={{ marginBottom: 10,fontWeight:'bold',fontsize:10 }}>
+                {data.item.artist}
+              </Text>
+            </Card>
+            </TouchableOpacity>
+render(){
+ if(this.state.loading){
+  return( 
+    <View style={styles.loader}> 
+      <ActivityIndicator size="large" color="#0c9"/>
+    </View>
+)}
+return(
+ <View style={styles.container}>
+ <FlatList
+    data= {this.state.dataSource}
+    ItemSeparatorComponent = {this.FlatListItemSeparator}
+    renderItem= {item=> this.renderItem(item)}
+    keyExtractor= {item=>item.id.toString()}
+ />
+</View>
+)}
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+   },
+  loader:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff"
+   },
+  list:{
+    paddingVertical: 4,
+    margin: 5,
+    backgroundColor: "#fff"
+   }
+});
+
+
+//
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import {Audio} from 'expo-av'
+
+
+const source = {
+  uri: 'https://psrtutorial.com/perf/Ryszard_files/6_8Beat_c-RYT4.mp3',
+};
+
+export default class App extends Component {
+  state = {
+    playingStatus: "play",
+  };
+  
+  async _playRecording() {
+    const { sound } = await Audio.Sound.create(
+      source,
+      {
+        shouldPlay: true,
+        isLooping: true,
+      },
+      this._updateScreenForSoundStatus,
+    );
+    this.sound = sound;
+    this.setState({
+      playingStatus: 'playing'
+    });
+  }
+  
+  _updateScreenForSoundStatus = (status) => {
+    if (status.isPlaying && this.state.playingStatus !== "playing") {
+      this.setState({ playingStatus: "playing" });
+    } else if (!status.isPlaying && this.state.playingStatus === "playing") {
+      this.setState({ playingStatus: "donepause" });
+    }
+  };
+  
+  async _pauseAndPlayRecording() {
+    if (this.sound != null) {
+      if (this.state.playingStatus == 'playing') {
+        console.log('pausing...');
+        await this.sound.pauseAsync();
+        console.log('paused!');
+        this.setState({
+          playingStatus: 'donepause',
+        });
+      } else {
+        console.log('playing...');
+        await this.sound.playAsync();
+        console.log('playing!');
+        this.setState({
+          playingStatus: 'playing',
+        });
+      }
+    }
+  }
+  
+  _syncPauseAndPlayRecording() {
+    if (this.sound != null) {
+      if (this.state.playingStatus == 'playing') {
+        this.sound.pauseAsync();
+      } else {
+        this.sound.playAsync();
+      }
+    }
+  }
+  
+  _playAndPause = () => {
+    switch (this.state.playingStatus) {
+      case 'play':
+        this._playRecording();
+        break;
+      case 'donepause':
+      case 'playing':
+        this._pauseAndPlayRecording();
+        break;
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={this._playAndPause}>
+            <Text style={styles.buttonText}>
+              {this.state.playingStatus}
+            </Text>
+          </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#000',
+  },
+  button: {
+    width: 150,
+    height: 50,
+    margin: 5,
+    borderRadius: 10,
+    backgroundColor: '#EB9CD0',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    fontWeight:'bold'
+  },
+});

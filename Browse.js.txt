@@ -1,0 +1,150 @@
+import React,{Component} from 'react';
+import {StyleSheet, Text, View,TextInput,Button,Image,ImageBackground, navigation} from 'react-native';
+import { createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import jazz from './jazz';
+import pop from './pop';
+import edm from './edm';
+import rock from './rock';
+import classical from './classical';
+import rap from './rap';
+import login from './login';
+
+export default class Browse extends React.Component {
+    render(){
+        return (
+            <ImageBackground
+    style={{ flex: 1,opacity:1}}
+    source={{
+      uri:
+        'https://wallpapertag.com/wallpaper/full/9/2/f/751297-new-good-mac-backgrounds-2560x1600-ipad-pro.jpg',
+    }}
+
+    >
+            <View>
+
+
+
+            <ImageBackground
+    style={{ flex:1,opacity:0.5}}
+    source={{
+      uri:
+        'https://previews.123rf.com/images/kunilanskap/kunilanskap1404/kunilanskap140400003/28130750-jazz-instruments-music-background.jpg',
+    }}
+    style={{
+      width:"150%",
+      height:'auto'
+    
+      
+       
+      }}
+
+    >
+                <View>
+                    <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0', justifyContent:'center',  alignItems:'center',marginLeft:150}}
+                    onPress={() => this.props.navigation.navigate('jazz')}>JAZZ</Text>
+                 </View>
+                 </ImageBackground>
+                 <ImageBackground
+    style={{flex:2, opacity:0.5}}
+    source={{
+      uri:
+        'https://comps.canstockphoto.com/music-background-means-rock-pop-or-clipart_csp20763713.jpg',
+    }}
+    style={{
+      resizeMode: 'contain',
+      width:"150%",
+      height:'auto'
+      
+       
+      }}
+
+    >
+                 <View>
+                     <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0', justifyContent:'center',  alignItems:'center',marginLeft:150}} 
+                     onPress={() => this.props.navigation.navigate('pop')} >POP</Text>
+                 </View>
+                 </ImageBackground>
+                 <ImageBackground
+    style={{ flex:3,opacity:0.5}}
+    source={{
+      uri:
+        'https://cdn131.picsart.com/267053367003201.jpg',
+    }}
+    style={{
+      width:"150%",
+      height:'auto'
+      
+       
+      }}
+
+    >
+                 <View>
+                     <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0' , justifyContent:'center',  alignItems:'center',marginLeft:150}} 
+                     onPress={() => this.props.navigation.navigate('edm')} >EDM</Text>
+                 </View>
+                 </ImageBackground>
+                 <ImageBackground
+    style={{flex:4, opacity:0.5}}
+    source={{
+      uri:
+        'https://cdn.wallpapersafari.com/38/5/F2BxYD.jpg',
+    }}
+    style={{
+      width:"150%",
+      height:'auto'
+      
+       
+      }}
+
+    >
+                 <View>
+                     <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0', justifyContent:'center',  alignItems:'center',marginLeft:150}}
+                     onPress={() => this.props.navigation.navigate('rock')} >ROCK</Text>
+                 </View>
+                 </ImageBackground>
+                 <ImageBackground
+    style={{ flex:5,opacity:0.5}}
+    source={{
+      uri:
+        'https://thumbs.dreamstime.com/z/classic-violin-grunge-paper-background-texture-music-education-concept-copy-space-34479060.jpg',
+    }}
+    style={{
+      width:"150%",
+      height:'auto'
+      
+       
+      }}
+
+    >
+                 <View>
+                     <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0', justifyContent:'center',  alignItems:'center',marginLeft:50}}
+                     onPress={() => this.props.navigation.navigate('classical')} >CLASSICAL</Text>
+                 </View>
+                 </ImageBackground>
+                 <ImageBackground
+    style={{ flex:6,opacity:0.5}}
+    source={{
+      uri:
+        'https://stmed.net/sites/default/files/rap-wallpapers-30529-7275219.png',
+    }}
+    style={{
+      width:"150%",
+      height:'auto'
+      
+       
+      }}
+
+    >
+                 <View>
+                     <Text style={{fontStyle:"italic",margin:15,fontWeight:"bold",fontSize:60, color:'#EB9CD0', justifyContent:'center',  alignItems:'center',marginLeft:150}}
+                     onPress={() => this.props.navigation.navigate('rap')} >RAP</Text>
+                 </View>
+                 </ImageBackground>
+             </View>
+             </ImageBackground>
+                );
+                }
+                }
+
+              

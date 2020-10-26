@@ -1,0 +1,153 @@
+import React, { Component } from 'react';
+
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator} from 'react-navigation-tabs';
+import { createDrawerNavigator} from 'react-navigation-drawer';
+import Home from './Home';
+import Browse from './Browse';
+import Search from './Search';
+import settings from './settings';
+import login from './login'
+
+
+class HamburgerIcon extends Component {
+
+  toggleDrawer = () => {
+
+    this.props.navigationProps.toggleDrawer();
+
+  }
+
+  render() {
+
+    return (
+
+      <View style={{ flexDirection: 'row' }}>
+
+        <TouchableOpacity onPress={this.toggleDrawer.bind(this)} >
+
+          <Image
+            source={{ uri: 'http://edesigns-sandiego.com/images/hamIcon.png' }}
+            style={{ width: 25, height: 25, marginLeft: 5 }}
+          />
+
+        </TouchableOpacity>
+
+      </View>
+
+    );
+
+
+  }
+}
+
+export const Tab_1 = createBottomTabNavigator({
+  Home: {
+    screen: Home, navigationOptions: { headerTitle: '1', 
+    tabBarIcon: ({tintColor}) =>
+      <Icon name="home" size={25} color={tintColor} />
+  }
+  },
+  Browse: {
+    screen: Browse, navigationOptions: { headerTitle: '2',
+    tabBarIcon: ({tintColor}) =>
+      <Icon name="globe" size={25} color={tintColor} />
+  }
+  },
+  Search: {
+    screen: Search, navigationOptions: { headerTitle: '3',
+    tabBarIcon: ({tintColor}) =>
+      <Icon name="search" size={25} color={tintColor} />
+  }
+  }
+}, {
+    tabBarPosition: 'Bottom',
+
+    swipeEnabled: true,
+
+    tabBarOptions: {
+
+      activeTintColor: '#EB9CD0',
+          inactiveTintColor: 'gray',
+          labelStyle: {
+            fontSize: 10,
+          },
+      style: {
+
+        backgroundColor: 'black'
+
+      }
+
+      
+      }
+
+  });
+
+  const First_2_Tabs = createStackNavigator({
+    First: {
+      screen: Tab_1,
+      navigationOptions: ({ navigation }) => ({
+        title: 'UPBEAT',
+        headerLeft: <HamburgerIcon navigationProps={navigation} />,
+        headerStyle: {
+          backgroundColor: 'black',
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+        },
+        headerTitleStyle: {  
+          fontWeight: 'bold', 
+          fontStyle: 'italic',
+           
+      },  
+        headerTintColor: '#EB9CD0',
+      })
+    },
+  });
+
+  const MyDrawerNavigator = createDrawerNavigator({
+
+    HOME: {
+  
+      screen: First_2_Tabs, 
+  
+    },
+
+    SETTINGS: {
+  
+      screen: settings,
+  
+    },
+  
+    LOGOUT: {
+  
+      screen: login,
+  
+    },
+  });
+
+
+  export default createAppContainer(MyDrawerNavigator);
+
+const styles = StyleSheet.create({
+
+  MainContainer: {
+
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#f5fcff',
+    padding: 5
+
+  },
+
+  text:
+  {
+    fontSize: 10,
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: 10
+  },
+
+});

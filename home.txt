@@ -1,0 +1,70 @@
+import React, { Component } from "react";
+import { FlatList, Text ,View,ImageBackground} from "react-native";
+import { Card } from "react-native-elements";
+
+const data = [
+  {
+    imageUri: "https://d368qv66y0shpj.cloudfront.net/featured_content/4d691ef652c7d49f97815d52bbeae7aa_500x500.jpg",
+    title: "BOLLYWOOD MIX"
+  },
+  {
+    imageUri: "https://i1.sndcdn.com/artworks-000229985101-zvyu40-t500x500.jpg",
+    title: "LITTLE MIX"
+  },
+  {
+    imageUri: "https://a10.gaanacdn.com/images/albums/10/2208810/crop_175x175_1533700883_2208810.jpg",
+    title: "PUNJABI MIX"
+  },
+  {
+    imageUri: "https://media1.popsugar-assets.com/files/thumbor/ty06W6hUNDvb1zhJjiVNFkCOkI8/fit-in/1024x1024/filters:strip_icc-!!-/2015/06/02/007/n/1922398/ca386e98_Love_Sex-RomanticLoveSongs.jpg",
+    title: "LOVE SONGS"
+  }
+];
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: data
+    };
+  }
+
+  render() {
+    return (
+      <ImageBackground
+        style={{ flex: 1,opacity:0.95}}
+        source={{
+          uri:
+            'https://wallpapertag.com/wallpaper/full/9/2/f/751297-new-good-mac-backgrounds-2560x1600-ipad-pro.jpg',
+        }}
+
+        >
+     
+      <View style={{flex:1,justifyContent:'center',alignItems:'center',paddingHorizontal:50}} >
+      <View>
+      <Text style={{fontWeight: 'bold',marginBottom:50,fontSize:30,marginTop:10}}>
+        MADE FOR YOU </Text>
+      </View>
+      <FlatList
+        horizontal
+        data={this.state.data}
+        renderItem={({ item: rowData }) => {
+          return (
+            <Card
+              title={null}
+              image={{ uri: rowData.imageUri }}
+              containerStyle={{ padding: 0, width: 200,height:50 }}
+            >
+              <Text style={{ marginBottom: 10,fontWeight:'bold',fontsize:10 }}>
+                {rowData.title}
+              </Text>
+            </Card>
+          );
+        }}
+        keyExtractor={(item, index) => index}
+      />
+      </View>
+      </ImageBackground>
+    );
+  }
+}

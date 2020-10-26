@@ -1,0 +1,21 @@
+import Home from './Home'
+import Browse from './Browse'
+import Search from './Search' 
+   
+   
+   import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+
+export default createMaterialBottomTabNavigator(
+    {
+      Home: {screen: Home},
+        Browse: {screen: Browse},
+        Search:{screen: Search}
+    },
+    {
+      initialRouteName: 'Home',
+      activeColor: 'white',
+      inactiveColor: 'grey',
+      barStyle: { backgroundColor: 'black' }
+    }
+  );
